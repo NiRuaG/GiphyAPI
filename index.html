@@ -49,7 +49,7 @@
             /* flex-flow: column nowrap; */
         }
 
-        main section:first-child {
+        main #searchResults {
             background: orange;
             flex: 1;
             min-height: 200vh; /* testing purposes */
@@ -95,11 +95,16 @@
         <section id="searchResults">
         </section>
         <aside>
-            aside to save favorites?
+            aside
+            <div>
+                <button id="pauseAll">Pause ALL</button>
+                <button id="playAll" > Play ALL</button>
+            </div>
+             to save favorites?
         </aside>
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <script src="./assets/javascript/app.js"></script>
 </body>
 
