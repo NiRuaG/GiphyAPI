@@ -80,26 +80,21 @@ $(document).ready(function() {
 
   function searchForGifsOf(searchTerm) {
 
-    let protocol = "https://"
-    let host = "api.giphy.com";
-    let path = {
-        url_path: "/v1/gifs/search",
-        method: "GET"
-    };
+    let scheme = "https://";
+    let   host = "api.giphy.com";
+    let   path = "/v1/gifs/search";
 
     let queryParams = $.param({
-        api_key: "dc6zaTOxFJmzC",
-        q: searchTerm,
-        limit: 10,
-        fmt: "json"
+        api_key : "dc6zaTOxFJmzC",
+              q : searchTerm,
+          limit : 10,
+            fmt : "json"
     });
-    let queryURL = protocol+host+path.url_path+'?'+queryParams;
-
-    console.log(queryURL);
+    let queryURL = scheme+host+path+'?'+queryParams;
 
     $.ajax({
          url: queryURL,
-      method: path.method,
+      method: "GET",
     }).then(function(response) {
       // $searchResults.append(
       //   $("<img>").attr("src", response.data[0].images["480w_still"].url),
