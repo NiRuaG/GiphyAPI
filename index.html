@@ -27,10 +27,12 @@
             flex-flow: row nowrap;
             flex: 1;
         }
+
         header div:first-child {
             background: yellowgreen;
             flex: 1;
         }
+
         header div:last-child {
             background: turquoise;
             align-self: end;
@@ -52,7 +54,8 @@
         main #searchResults {
             background: orange;
             flex: 1;
-            min-height: 200vh; /* testing purposes */
+            min-height: 200vh;
+            /* testing purposes */
             /* display: flex; */
             /* flex-direction: column; */
         }
@@ -61,27 +64,7 @@
 
 <body>
     <header>
-        <div>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
-            <button>lorem</button>
+        <div id="searchTermButtonsArea">
         </div>
         <div>
             <p>Add an [ITEM-TYPE]</p>
@@ -93,14 +76,17 @@
     </header>
     <main>
         <section id="searchResults">
+            <p>
+                filters?, before/after
+            </p>
         </section>
         <aside>
             aside
             <div>
                 <button id="pauseAll">Pause ALL</button>
-                <button id="playAll" > Play ALL</button>
+                <button id="playAll"> Play ALL</button>
             </div>
-             to save favorites?
+            to save favorites?
         </aside>
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
