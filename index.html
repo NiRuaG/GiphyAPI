@@ -2,96 +2,197 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All the gif's!</title>
-    <link rel="stylesheet" href="./assets/css/reset.css">
-    <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: blue;
-            color: white;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>All the gif's!</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: blue;
+      color: white;
 
-            display: flex;
-            flex-flow: column nowrap;
-            min-height: 100vh;
-        }
+      display: flex;
+      flex-flow: column nowrap;
+      min-height: 100vh;
+    }
 
-        header {
-            background: red;
-            position: sticky;
-            top: 0;
-            display: flex;
-            flex-flow: row nowrap;
-            flex: 1;
-        }
+    header {
+      background: red;
+      position: sticky;
+      z-index: 99;
+      top: 0;
+      display: flex;
+      flex-flow: row nowrap;
+      flex: 1;
+    }
 
-        header div:first-child {
-            background: yellowgreen;
-            flex: 1;
-        }
+    header div:first-child {
+      background: yellowgreen;
+      flex: 1;
+    }
 
-        header div:last-child {
-            background: turquoise;
-            align-self: end;
-        }
+    header div:last-child {
+      background: turquoise;
+      /* align-self: end; */
+    }
 
-        main {
-            display: flex;
-            flex-flow: row nowrap;
-            /* flex: 1 0 auto; */
-        }
+    main {
+      background: orange;
+      flex: 1;
+      min-height: 200vh;
+      display: flex;
+      flex-flow: row nowrap;
+    }
 
-        aside {
-            background: green;
-            /* flex: 0 auto; */
-            /* display: flex; */
-            /* flex-flow: column nowrap; */
-        }
+    main section:first-of-type {
+      flex: 1;
+    }
 
-        main #searchResults {
-            background: orange;
-            flex: 1;
-            min-height: 200vh;
-            /* testing purposes */
-            /* display: flex; */
-            /* flex-direction: column; */
-        }
-    </style>
+    aside {
+      background: green;
+      /* flex: 0 auto; */
+      /* display: flex; */
+      /* flex-flow: column nowrap; */
+      width: 25vw;
+    }
+
+    #searchResults {
+      background: orangered;
+      flex: 1;
+      display: flex;
+      flex-flow: row wrap;
+      align-content: start;
+      justify-content: space-evenly;
+    }
+
+    .favImg {
+      transition: opacity 0.6s;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      pointer-events: all;
+    }
+
+    .fas {
+      color: red;
+    }
+
+    .far {
+      color: white;
+    }
+
+    #favorites .fas {
+      font-size: 1rem;
+      color: red;
+    }
+
+    #favorites .far {
+      font-size: 1rem;
+      color: white;
+    }
+
+    .favImg:not(.favorited) .fas,
+    .favImg.favorited .far {
+      display: none;
+    }
+
+    .favImg.favorited .fas,
+    .favImg:not(.favorited) .far {
+      display: inherit;
+    }
+
+    .imgResult {
+      background: teal;
+      margin-top: 0.5rem;
+    }
+
+    .imgResult p {
+      padding: 0.3rem;
+    }
+
+    #favorites img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .imgOptions {
+      pointer-events: none;
+      display: flex;
+      flex-flow: row-reverse nowrap;
+      background: black;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 0.3rem;
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+
+    figure:hover .imgOptions {
+      opacity: 0.5;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <div id="searchTermButtonsArea">
-        </div>
+  <header>
+    <div id="searchTermButtonsArea">
+    </div>
+    <div>
+        <p>Add an [ITEM-TYPE]</p>
         <div>
-            <p>Add an [ITEM-TYPE]</p>
-            <div>
-                <button>+</button>
-                <input placeholder="asdf">
-            </div>
+          <button>+</button>
+          <input placeholder="asdf">
         </div>
-    </header>
-    <main>
-        <section id="searchResults">
-            <p>
-                filters?, before/after
-            </p>
-        </section>
-        <aside>
-            aside
-            <div>
-                <button id="pauseAll">Pause ALL</button>
-                <button id="playAll"> Play ALL</button>
-            </div>
-            to save favorites?
-        </aside>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <script src="./assets/javascript/app.js"></script>
+      </div>
+  </header>
+  <main>
+    <section>
+      <button id="clearAllResults">Clear ALL</button>
+      <button id="pauseAllResults">Pause ALL</button>
+      <button id="playAllResults"> Play ALL</button>
+      <p style="width: 100%">
+        filters?, before/after
+      </p>
+      <div id="searchResults">
+      </div>
+    </section>
+    <aside>
+      aside
+      <div style="display: flex; flex-flow:row wrap">
+        <button id="pauseAllFavs">Pause ALL</button>
+        <button id="playAllFavs"> Play ALL</button>
+      </div>
+      <div id="favorites">
+      </div>
+    </aside>
+  </main>
+
+  <template id="imgResultTemp">
+    <div class="imgResult" style="display: inline-block">
+      <p>Rating: <span class="rating"></span></p>
+      <figure style="position: relative; display:inline-block">
+        <img class="gifImg" data-still-url="#" data-animate-url="#" data-state="still" src="https://loremflickr.com/240/160">
+        <div class="imgOptions">
+          <div class="favImg">
+            <i class="far fa-heart fa-lg"></i>
+            <i class="fas fa-heart fa-lg"></i>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </template>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="./assets/javascript/app.js"></script>
 </body>
 
 </html>
