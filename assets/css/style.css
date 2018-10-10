@@ -1,0 +1,141 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* background: blue; */
+  /* color: white; */
+
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 100vh;
+}
+
+.clickable { cursor: pointer; }
+
+.buttonWrap {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0.8rem;
+}
+.buttonWrap > * { margin-right: 0.2rem; }
+
+header {
+  /* background: red; */
+  position: sticky;
+  z-index: 99;
+  top: 0;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+header #searchTermButtonsArea {
+  background: yellowgreen;
+  flex: 1;
+}
+
+header form {
+  background: turquoise;
+}
+
+main {
+  background: orange;
+  flex: 1;
+  /* min-height: 200vh; */
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+main section:first-child {
+  flex: 1;
+}
+
+main section p {
+  text-align: center;
+  font-size: 12px;
+}
+
+main #searchResults {
+  background: orangered;
+  flex: 1;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: start;
+  justify-content: space-evenly;
+}
+
+main aside {
+  background: green;
+  width: 30vw;
+}
+
+aside #favorites {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+aside #favorites img {
+  max-width: 100%;
+  height: auto;
+}
+aside #favorites .fas,
+aside #favorites .far {
+  font-size: 1rem;
+}
+
+.favImg {
+  transition: opacity 0.6s;
+  background: transparent;
+  border: none;
+  pointer-events: all;
+}
+
+.fas.fa-heart {
+  color: red;
+}
+
+.far.fa-heart,
+.fa-play,
+.fa-pause {
+  color: white;
+}
+
+.favImg:not(.favorited) .fas,
+.favImg.favorited .far {
+  display: none;
+}
+
+.favImg.favorited .fas,
+.favImg:not(.favorited) .far {
+  display: inherit;
+}
+
+.imgResult {
+  background: darkslategray;
+  margin-top: 0.5rem;
+}
+
+.imgResult p {
+  padding: 0.3rem;
+  color: white;
+}
+
+.imgOptions {
+  pointer-events: none;
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  background: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.3rem;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+figure:hover .imgOptions {
+  opacity: 0.5;
+}

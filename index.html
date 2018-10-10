@@ -9,190 +9,44 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
   <link rel="stylesheet" href="./assets/css/reset.css">
-  <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: blue;
-      color: white;
-
-      display: flex;
-      flex-flow: column nowrap;
-      min-height: 100vh;
-    }
-
-    header {
-      background: red;
-      position: sticky;
-      z-index: 99;
-      top: 0;
-      display: flex;
-      flex-flow: row nowrap;
-      flex: 1;
-    }
-
-    header div:first-child {
-      background: yellowgreen;
-      flex: 1;
-    }
-
-    header div:last-child {
-      background: turquoise;
-      /* align-self: end; */
-    }
-
-    main {
-      background: orange;
-      flex: 1;
-      min-height: 200vh;
-      display: flex;
-      flex-flow: row nowrap;
-    }
-
-    main section:first-of-type {
-      flex: 1;
-    }
-
-    aside {
-      background: green;
-      /* flex: 0 auto; */
-      /* display: flex; */
-      /* flex-flow: column nowrap; */
-      width: 25vw;
-    }
-
-    #searchResults {
-      background: orangered;
-      flex: 1;
-      display: flex;
-      flex-flow: row wrap;
-      align-content: start;
-      justify-content: space-evenly;
-    }
-
-    .favImg {
-      transition: opacity 0.6s;
-      background: transparent;
-      border: none;
-      pointer-events: all;
-    }
-
-    .fas.fa-heart {
-      color: red;
-    }
-
-    .far.fa-heart, .fa-play, .fa-pause {
-      color: white;
-    }
-
-    #favorites .fas {
-      font-size: 1rem;
-      color: red;
-    }
-
-    #favorites .far {
-      font-size: 1rem;
-      color: white;
-    }
-
-    .favImg:not(.favorited) .fas,
-    .favImg.favorited .far {
-      display: none;
-    }
-
-    .favImg.favorited .fas,
-    .favImg:not(.favorited) .far {
-      display: inherit;
-    }
-
-    .imgResult {
-      background: teal;
-      margin-top: 0.5rem;
-    }
-
-    .imgResult p {
-      padding: 0.3rem;
-    }
-
-    #favorites img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    #favorites {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .imgOptions {
-      pointer-events: none;
-      display: flex;
-      flex-flow: row-reverse nowrap;
-      background: black;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 0.3rem;
-      border-bottom-left-radius: 0.5rem;
-      border-bottom-right-radius: 0.5rem;
-      opacity: 0;
-      transition: opacity 0.6s;
-    }
-
-    figure:hover .imgOptions {
-      opacity: 0.5;
-    }
-    .clickable {
-      cursor: pointer;
-    }
-    .buttonWrap {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-around;
-      padding: 0.8rem;
-    }
-    .buttonWrap>* {
-      margin-right: 0.2rem
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
   <header>
     <div id="searchTermButtonsArea">
     </div>
-    <div>
-      <form>
-        <input id="addSearch_submit" type="submit" value="+">
-        <input id="addSearch_input" placeholder="Add New Search">
-      </form>
-    </div>
+    <form>
+      <input id="addSearch_submit" type="submit" value="+">
+      <input id="addSearch_input" placeholder="Add New Search">
+    </form>
   </header>
   <main>
     <section>
       <div class="buttonWrap">
         <span id="clearAllResults" class="clickable">
-          <i class="fas fa-trash-alt fa-2x"></i>
+          <i class="fas fa-trash-alt fa-lg"></i>
         </span>
         <span id="playAllResults" class="clickable">
-          <i class="fas fa-play-circle fa-2x"></i>
+          <i class="fas fa-play-circle fa-lg"></i>
         </span>
         <span id="pauseAllResults" class="clickable">
-          <i class="fas fa-pause-circle fa-2x"></i>
+          <i class="fas fa-pause-circle fa-lg"></i>
         </span>
       </div>
-      <!-- <p>
-        TODO: filters?, before/after
-      </p> -->
+      <p>
+        Click images below to play/pause individually, or the buttons above for all.
+      </p>
       <div id="searchResults">
       </div>
     </section>
     <aside>
-      <!-- <div style="display: flex; flex-flow:row wrap"> -->
       <div class="buttonWrap">
+        <span id="moveAllFavs" class="fa-stack clickable">
+          <i class="fas fa-heart fa-stack-2x"></i>
+          <!-- <i class="fas fa-arrow-left fa-stack-1x"></i> -->
+          <i class="fas fa-arrow-circle-left fa-stack-1x" style="color:white"></i>
+        </span>
         <span id="playAllFavs" class="fa-stack clickable">
           <i class="fas fa-heart fa-stack-2x"></i>
           <i class="fas fa-play  fa-stack-1x"></i>
@@ -209,7 +63,7 @@
 
   <template id="imgResultTemp">
     <div class="imgResult" style="display: inline-block">
-      <p>Rating: <span class="rating"></span></p>
+      <p>Rating: <span class="rating">?</span></p>
       <figure style="position: relative; display:inline-block">
         <img class="gifImg" data-still-url="#" data-animate-url="#" data-state="still" src="#" alt="Template Img">
         <div class="imgOptions">
@@ -221,6 +75,7 @@
       </figure>
     </div>
   </template>
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="./assets/javascript/app.js"></script>

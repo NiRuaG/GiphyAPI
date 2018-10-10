@@ -42,6 +42,7 @@ $(document).ready(function() {
     $playAllResults: $("#playAllResults"),
     $pauseAllFavs: $("#pauseAllFavs"),
     $playAllFavs: $("#playAllFavs"),
+    $moveAllFavs: $("#moveAllFavs"),
     $imgResultTemplate: $("#imgResultTemp"),
     $addSearch_input: $("#addSearch_input"),
     $addSearch_submit: $("#addSearch_submit")
@@ -54,7 +55,8 @@ $(document).ready(function() {
     gifImg: "gifImg",
     rating: "rating",
     imgResult: "imgResult",
-    favImg: "favImg"
+    favImg: "favImg",
+    favorited: "favorited",
   };
 
   // Dynamic Selections
@@ -94,6 +96,7 @@ $(document).ready(function() {
       topics.push(input);
       appendSearchButton(input);
       JQ_ID.$addSearch_input.val("");
+      JQ_ID.$searchResults.empty();
       searchForGifsOf(input);
     }
   });
@@ -150,20 +153,27 @@ $(document).ready(function() {
   JQ_ID.$playAllFavs.click(function() {
     playGif($(DOM_SELECT.gifImg_inFavorites));
   });
+  JQ_ID.$moveAllFavs.click(function() {
+    // check if at least one favorite?
+    JQ_ID.$searchResults.empty().
+    append(
+      $(DOM_SELECT.gifImg_inFavorites).closest(".imgResult").clone()
+    );
+  });
 
   $(document).on("click", DOM_SELECT.favImg_inFavorites, function(event) {
     $(this)
-      .toggleClass("favorited", false)
+      .toggleClass(DOM_CLASS.favorited, false)
       .closest(".imgResult")
         .remove();
   });
 
   $(document).on("click", DOM_SELECT.favImg_inResults, function(event) {
     let $this = $(this);
-    $this.toggleClass("favorited");
+    $this.toggleClass(DOM_CLASS.favorited);
 
-    if ($this.hasClass("favorited")) {
-      $("#favorites").prepend($this.closest(".imgResult").clone());
+    if ($this.hasClass(DOM_CLASS.favorited)) {
+      JQ_ID.$favorites.prepend($this.closest(".imgResult").clone());
     } else {
       // find it in favorites?
       // console.log($this.closest(".imgResult"));
@@ -182,8 +192,6 @@ $(document).ready(function() {
   });
 
   function searchForGifsOf(searchTerm) {
-    JQ_ID.$searchResults.empty();
-
     let scheme = "https://";
     let host = "api.giphy.com";
     let path = "/v1/gifs/search";
@@ -240,6 +248,7 @@ $(document).ready(function() {
   }
 
   $(document).on("click", DOM_SELECT.searchButtons, function(event) {
+    JQ_ID.$searchResults.empty();
     searchForGifsOf($(this).text());
   });
 });
