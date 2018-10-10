@@ -1,8 +1,6 @@
 $(document).ready(function() {
   "use strict";
 
-  console.log("READY!");
-
   let topics = [
     "earthbound",
     "final fantasy",
@@ -26,95 +24,150 @@ $(document).ready(function() {
     "god of war"
   ];
 
+  // let favoritesSet = new Set();
+  // read from storage
+
   // Static IDs
   const DOM_ID = {
     searchResults: "searchResults",
-    favorites: "favorites",
-  }
-  
-  const $searchResults = $(`#${DOM_ID.searchResults}`);
-  const $favorites = $(`#${DOM_ID.favorites}`);
+    favorites: "favorites"
+  };
 
-  let $searchTermButtonsArea = $("#searchTermButtonsArea");
-  let $clearAllResults = $("#clearAllResults");
-  let $pauseAllResults = $("#pauseAllResults");
-  let $playAllResults = $("#playAllResults");
-  let $clearAllFavs = $("#clearAllFavs");
-  let $pauseAllFavs = $("#pauseAllFavs");
-  let $playAllFavs = $("#playAllFavs");
-  let $imgResult = $("#imgResult");
+  const JQ_ID = {
+    $searchResults: $(`#${DOM_ID.searchResults}`),
+    $favorites: $(`#${DOM_ID.favorites}`),
+    $searchTermButtonsArea: $("#searchTermButtonsArea"),
+    $clearAllResults: $("#clearAllResults"),
+    $pauseAllResults: $("#pauseAllResults"),
+    $playAllResults: $("#playAllResults"),
+    $pauseAllFavs: $("#pauseAllFavs"),
+    $playAllFavs: $("#playAllFavs"),
+    $imgResultTemplate: $("#imgResultTemp"),
+    $addSearch_input: $("#addSearch_input"),
+    $addSearch_submit: $("#addSearch_submit")
+  };
 
+  //   let $clearAllFavs = $("#clearAllFavs");
 
   const DOM_CLASS = {
     searchButton: "searchButton",
     gifImg: "gifImg",
     rating: "rating",
     imgResult: "imgResult",
-    favImg: "favImg",
+    favImg: "favImg"
   };
 
   // Dynamic Selections
   let DOM_SELECT = {
-    gifImg_any      : `.${DOM_CLASS.gifImg}`,
-    gifImg_results  : `#${DOM_ID.searchResults} .${DOM_CLASS.gifImg}`,
-    gifImg_favorites: `#${DOM_ID.favorites} .${DOM_CLASS.gifImg}`,
-    searchButtons: `.${DOM_CLASS.searchButton}`,
-    favImg: `.${DOM_CLASS.favImg}`,
+    gifImg_any        : `.${DOM_CLASS.gifImg}`,
+    gifImg_inResults  : `#${DOM_ID.searchResults} .${DOM_CLASS.gifImg}`,
+    gifImg_inFavorites: `#${DOM_ID.favorites    } .${DOM_CLASS.gifImg}`,
+
+    // favImg_any        : `.${DOM_CLASS.favImg}`,
+    favImg_inResults  : `#${DOM_ID.searchResults} .${DOM_CLASS.favImg}`,
+    favImg_inFavorites: `#${DOM_ID.favorites    } .${DOM_CLASS.favImg}`,
+
+    searchButtons     : `.${DOM_CLASS.searchButton}`
   };
 
-  topics.forEach(topic => {
-    $searchTermButtonsArea.append(
+  function appendSearchButton(text) {
+    JQ_ID.$searchTermButtonsArea.append(
       $("<button>")
-        .text(topic)
+        .text(text)
         .addClass(DOM_CLASS.searchButton)
     );
+  }
+
+  topics.forEach(topic => {
+    appendSearchButton(topic);
   });
-  $searchResults.append(
-    $("#imgResultTemp")
-      .clone()
-      .contents()
-  );
+
+  JQ_ID.$addSearch_submit.click(function(event) {
+    event.preventDefault();
+    let input = JQ_ID.$addSearch_input.val().trim();
+    if (!input) {
+      return;
+    }
+    if (topics.includes(input)) {
+      // handle duplicate search add.. highlight in current list?, perform gif search?
+    } else {
+      topics.push(input);
+      appendSearchButton(input);
+      JQ_ID.$addSearch_input.val("");
+      searchForGifsOf(input);
+    }
+  });
+
+  // FOR TESTING
+  let $tempImg = JQ_ID.$imgResultTemplate.clone().contents();
+  $tempImg.find("img").attr("src", "https://loremflickr.com/240/160");
+  JQ_ID.$searchResults.append($tempImg);
+  // ENDFORTESTING
 
   function pauseGif($jqResult) {
     $jqResult.each(function(index, element) {
-      $(this).attr("src", $(this).attr("data-still-url"));
-      $(this).attr("data-state", "still");
+      let $this = $(this);
+      $this
+        .one("error", function() {
+          console.log("Pausing img problem", this);
+        })
+        .attr({
+          src: $this.attr("data-still-url"),
+          "data-state": "still"
+        });
     });
   }
 
   function playGif($jQResult) {
     $jQResult.each(function(index, element) {
-      $(this).attr("src", $(this).attr("data-animate-url"));
-      $(this).attr("data-state", "animate");
+      let $this = $(this)
+      $this
+        .one("error", function() {
+          console.log("Playing img problem", this);
+        })
+        .attr({
+          src: $this.attr("data-animate-url"),
+          "data-state": "animate"
+        });
     });
   }
 
-  $clearAllResults.click(function() {
-    $searchResults.empty();
-  });
-  $pauseAllResults.click(function() {
-    pauseGif($(DOM_SELECT.gifImg_results));
-  });
-  $playAllResults.click(function() {
-    playGif($(DOM_SELECT.gifImg_results));
-  });
-  $pauseAllFavs.click(function() {
-    pauseGif($(`#favorites .${DOM_CLASS.gifImg}`));
-  });
-  $playAllFavs.click(function() {
-    playGif($(`#favorites .${DOM_CLASS.gifImg}`));
+  JQ_ID.$clearAllResults.click(function() {
+    JQ_ID.$searchResults.empty();
   });
 
-  $(document).on("click", DOM_SELECT.favImg, function(event) {
+  JQ_ID.$pauseAllResults.click(function() {
+    pauseGif($(DOM_SELECT.gifImg_inResults));
+  });
+
+  JQ_ID.$playAllResults.click(function() {
+    playGif($(DOM_SELECT.gifImg_inResults));
+  });
+
+  JQ_ID.$pauseAllFavs.click(function() {
+    pauseGif($(DOM_SELECT.gifImg_inFavorites));
+  });
+  JQ_ID.$playAllFavs.click(function() {
+    playGif($(DOM_SELECT.gifImg_inFavorites));
+  });
+
+  $(document).on("click", DOM_SELECT.favImg_inFavorites, function(event) {
+    $(this)
+      .toggleClass("favorited", false)
+      .closest(".imgResult")
+        .remove();
+  });
+
+  $(document).on("click", DOM_SELECT.favImg_inResults, function(event) {
     let $this = $(this);
     $this.toggleClass("favorited");
 
-    if ($this.hasClass("favorited")){
-      $("#favorites").append($this.closest(".imgResult").clone());
-    }
-    else {
-      console.log($this.closest(".imgResult"));
-      $this.closest(".imgResult").remove();
+    if ($this.hasClass("favorited")) {
+      $("#favorites").prepend($this.closest(".imgResult").clone());
+    } else {
+      // find it in favorites?
+      // console.log($this.closest(".imgResult"));
+      // $this.closest(".imgResult").remove();
     }
   });
 
@@ -129,6 +182,8 @@ $(document).ready(function() {
   });
 
   function searchForGifsOf(searchTerm) {
+    JQ_ID.$searchResults.empty();
+
     let scheme = "https://";
     let host = "api.giphy.com";
     let path = "/v1/gifs/search";
@@ -136,7 +191,7 @@ $(document).ready(function() {
     let queryParams = $.param({
       api_key: "dc6zaTOxFJmzC",
       q: searchTerm,
-      limit: 3,
+      limit: 10,
       fmt: "json"
     });
     let queryURL = scheme + host + path + "?" + queryParams;
@@ -155,23 +210,25 @@ $(document).ready(function() {
       //   $("<img>").attr("src", response.data[1].images.original.url),
       //   $("<img>").attr("src", response.data[2].images.original.url)
       // );
-      response.data.forEach(datum => {
-        let $clone = $("#imgResultTemp").clone().contents();
+      response.data.forEach( datum => {
+        let $clone = JQ_ID.$imgResultTemplate.clone().contents();
 
         $clone
           .find("img")
-            .attr({
-              "data-still-url"  : datum.images.fixed_width_still.url,
-              "data-animate-url": datum.images.fixed_width.url,
-              "src": datum.images.fixed_width_still.url,
-              "data-state": "still"
-            });
+          .one("error", function() {
+            console.log("Loading img error", this);
+          })
+          .attr({
+            src: datum.images.fixed_width_still.url,
+            "data-still-url": datum.images.fixed_width_still.url,
+            "data-animate-url": datum.images.fixed_width.url,
+            "data-state": "still",
+            alt: datum.title || `${searchTerm} gif img`
+          });
 
-        $clone
-          .find(`.${DOM_CLASS.rating}`).text(datum.rating);
+        $clone.find(`.${DOM_CLASS.rating}`).text(datum.rating);
 
-        $searchResults
-          .append($clone);
+        JQ_ID.$searchResults.append($clone);
       });
       // $searchResults.append(
       //   $("<img>").attr("src", response.data[0].images.fixed_width_small.url),
@@ -183,7 +240,6 @@ $(document).ready(function() {
   }
 
   $(document).on("click", DOM_SELECT.searchButtons, function(event) {
-    $searchResults.empty();
     searchForGifsOf($(this).text());
   });
 });

@@ -74,15 +74,14 @@
       transition: opacity 0.6s;
       background: transparent;
       border: none;
-      cursor: pointer;
       pointer-events: all;
     }
 
-    .fas {
+    .fas.fa-heart {
       color: red;
     }
 
-    .far {
+    .far.fa-heart, .fa-play, .fa-pause {
       color: white;
     }
 
@@ -120,6 +119,13 @@
       height: auto;
     }
 
+    #favorites {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
     .imgOptions {
       pointer-events: none;
       display: flex;
@@ -139,6 +145,18 @@
     figure:hover .imgOptions {
       opacity: 0.5;
     }
+    .clickable {
+      cursor: pointer;
+    }
+    .buttonWrap {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+      padding: 0.8rem;
+    }
+    .buttonWrap>* {
+      margin-right: 0.2rem
+    }
   </style>
 </head>
 
@@ -147,29 +165,42 @@
     <div id="searchTermButtonsArea">
     </div>
     <div>
-        <p>Add an [ITEM-TYPE]</p>
-        <div>
-          <button>+</button>
-          <input placeholder="asdf">
-        </div>
-      </div>
+      <form>
+        <input id="addSearch_submit" type="submit" value="+">
+        <input id="addSearch_input" placeholder="Add New Search">
+      </form>
+    </div>
   </header>
   <main>
     <section>
-      <button id="clearAllResults">Clear ALL</button>
-      <button id="pauseAllResults">Pause ALL</button>
-      <button id="playAllResults"> Play ALL</button>
-      <p style="width: 100%">
-        filters?, before/after
-      </p>
+      <div class="buttonWrap">
+        <span id="clearAllResults" class="clickable">
+          <i class="fas fa-trash-alt fa-2x"></i>
+        </span>
+        <span id="playAllResults" class="clickable">
+          <i class="fas fa-play-circle fa-2x"></i>
+        </span>
+        <span id="pauseAllResults" class="clickable">
+          <i class="fas fa-pause-circle fa-2x"></i>
+        </span>
+      </div>
+      <!-- <p>
+        TODO: filters?, before/after
+      </p> -->
       <div id="searchResults">
       </div>
     </section>
     <aside>
-      aside
-      <div style="display: flex; flex-flow:row wrap">
-        <button id="pauseAllFavs">Pause ALL</button>
-        <button id="playAllFavs"> Play ALL</button>
+      <!-- <div style="display: flex; flex-flow:row wrap"> -->
+      <div class="buttonWrap">
+        <span id="playAllFavs" class="fa-stack clickable">
+          <i class="fas fa-heart fa-stack-2x"></i>
+          <i class="fas fa-play  fa-stack-1x"></i>
+        </span>
+        <span id="pauseAllFavs" class="fa-stack clickable">
+          <i class="fas fa-heart fa-stack-2x"></i>
+          <i class="fas fa-pause fa-stack-1x"></i>
+        </span>
       </div>
       <div id="favorites">
       </div>
@@ -180,9 +211,9 @@
     <div class="imgResult" style="display: inline-block">
       <p>Rating: <span class="rating"></span></p>
       <figure style="position: relative; display:inline-block">
-        <img class="gifImg" data-still-url="#" data-animate-url="#" data-state="still" src="https://loremflickr.com/240/160">
+        <img class="gifImg" data-still-url="#" data-animate-url="#" data-state="still" src="#" alt="Template Img">
         <div class="imgOptions">
-          <div class="favImg">
+          <div class="favImg clickable">
             <i class="far fa-heart fa-lg"></i>
             <i class="fas fa-heart fa-lg"></i>
           </div>
