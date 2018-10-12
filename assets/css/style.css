@@ -1,3 +1,15 @@
+/*#region Utility Classes */
+.clickable { cursor: pointer; }
+
+.buttonWrap {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0.8rem;
+}
+.buttonWrap > * { margin-right: 0.2rem; }
+/*#endregion */
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   /* background: blue; */
@@ -8,16 +20,7 @@ body {
   min-height: 100vh;
 }
 
-.clickable { cursor: pointer; }
-
-.buttonWrap {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  padding: 0.8rem;
-}
-.buttonWrap > * { margin-right: 0.2rem; }
-
+/* #region Header */
 header {
   /* background: red; */
   position: sticky;
@@ -27,15 +30,89 @@ header {
   flex-flow: row nowrap;
 }
 
+/* #region Header - Search Buttons */
 header #searchTermButtonsArea {
   background: yellowgreen;
   flex: 1;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
 }
 
+header #searchTermButtonsArea .searchButtonWrap {
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+header #searchTermButtonsArea .searchButton {
+  text-transform: uppercase;
+  text-align: center;
+  vertical-align: center;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  line-height: 2;
+  letter-spacing: 0.05rem;
+  box-shadow: 0 3px 0 0 #007299;
+  padding: 0.2rem 0.5rem;
+  border: 0 none;
+  border-color: #285e8e;
+  color: white;
+  background: #33a6cc;
+}
+
+header #searchTermButtonsArea .searchButton:active {
+	background: #33a6cc;
+	box-shadow: none;
+	margin-bottom: -3px;
+	margin-top: 3px;
+}
+/* #endregion */
+
+/* #region Header - Form */
 header form {
   background: turquoise;
+    padding: 1rem;
+  max-width: 30vw;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  justify-content: center;
 }
 
+header form input.addSearch_submit {
+  display: none;
+}
+header form .addSearch_submit {
+  cursor: pointer;
+}
+header form #addSearch_input {
+  width: 100%;
+  border: none;
+  background: none;
+  color: white;
+  border-bottom: 3px solid darkblue;
+  border-radius: 3px;
+  padding-left: 1rem;
+  line-height: 1.5rem;
+  font-size: 1.1rem;
+  /* flex: 1; */
+}
+header form #addSearch_input::placeholder {
+  color: white;
+  opacity: 0.7;
+}
+header form #addSearch_input:focus {
+  background-color: darkblue;
+}
+/* #endregion */
+
+/* #endregion */
+
+/* #region Main */
 main {
   background: orange;
   flex: 1;
@@ -44,6 +121,7 @@ main {
   flex-flow: row nowrap;
 }
 
+/* #region Main - Results */
 main section:first-child {
   flex: 1;
 }
@@ -51,6 +129,7 @@ main section:first-child {
 main section p {
   text-align: center;
   font-size: 12px;
+  margin-bottom: 0.5rem;
 }
 
 main #searchResults {
@@ -60,28 +139,42 @@ main #searchResults {
   flex-flow: row wrap;
   align-content: start;
   justify-content: space-evenly;
+  padding: 0.3rem
 }
 
+/* #endregion */
+
+/* #region Main - Favorites aside */
 main aside {
   background: green;
   width: 30vw;
 }
 
-aside #favorites {
+main aside .fa-heart {
+  color: red;
+}
+main aside .fa-stack-1x {
+  color: white;
+}
+
+main aside #favorites {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
 }
 
-aside #favorites img {
+main aside #favorites img {
   max-width: 100%;
   height: auto;
 }
-aside #favorites .fas,
-aside #favorites .far {
+main aside #favorites .fas,
+main aside #favorites .far {
   font-size: 1rem;
 }
+/* #endregion */
+
+/* #endregion */
 
 .favImg {
   transition: opacity 0.6s;
@@ -94,9 +187,7 @@ aside #favorites .far {
   color: red;
 }
 
-.far.fa-heart,
-.fa-play,
-.fa-pause {
+.far.fa-heart {
   color: white;
 }
 
@@ -113,10 +204,11 @@ aside #favorites .far {
 .imgResult {
   background: darkslategray;
   margin-top: 0.5rem;
+  margin-right: 0.3rem
 }
 
 .imgResult p {
-  padding: 0.3rem;
+  padding-top: 0.5rem;
   color: white;
 }
 

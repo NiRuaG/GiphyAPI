@@ -48,6 +48,9 @@ table {
 	border-spacing: 0;
 }
 
+body > * {
+	box-sizing: border-box;
+}
 /* Added styles to reset -AG */
 hr { 
 	margin: 0;

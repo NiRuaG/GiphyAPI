@@ -17,8 +17,8 @@
     <div id="searchTermButtonsArea">
     </div>
     <form>
-      <input id="addSearch_submit" type="submit" value="+">
-      <input id="addSearch_input" placeholder="Add New Search">
+      <input class="addSearch_submit" type="submit" value=""><i class="addSearch_submit fas fa-search-plus fa-lg"></i>
+      <input id="addSearch_input" placeholder="Add Search">
     </form>
   </header>
   <main>
@@ -44,8 +44,7 @@
       <div class="buttonWrap">
         <span id="moveAllFavs" class="fa-stack clickable">
           <i class="fas fa-heart fa-stack-2x"></i>
-          <!-- <i class="fas fa-arrow-left fa-stack-1x"></i> -->
-          <i class="fas fa-arrow-circle-left fa-stack-1x" style="color:white"></i>
+          <i class="fas fa-arrow-circle-left fa-stack-1x"></i>
         </span>
         <span id="playAllFavs" class="fa-stack clickable">
           <i class="fas fa-heart fa-stack-2x"></i>
@@ -55,6 +54,10 @@
           <i class="fas fa-heart fa-stack-2x"></i>
           <i class="fas fa-pause fa-stack-1x"></i>
         </span>
+        <span id="clearAllFavs" class="fa-stack clickable">
+            <i class="fas fa-heart     fa-stack-2x"></i>
+            <i class="fas fa-trash-alt fa-stack-1x"></i>
+          </span>
       </div>
       <div id="favorites">
       </div>
