@@ -9,7 +9,6 @@ $(document).ready(function() {
     "skyrim",
     "sonic",
     "starcraft",
-    "starfox",
     "street fighter",
     "smash bros",
     "tetris",
@@ -17,9 +16,11 @@ $(document).ready(function() {
     "warcraft",
     "overwatch",
     "fortnite",
-    "galaga",
     "space invader",
-    "god of war"
+    "god of war",
+    "leage of legends",
+    "cuphead",
+    "destiny 2",
   ];
 
   // TODO: save/read from storage
