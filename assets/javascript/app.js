@@ -164,11 +164,14 @@ $(document).ready(function() {
   });
 
   JQ_SELECT.$moveAllFavs.click(function() {
-    // check if at least one favorite?
+    let favoritedGifImgs = $(DOM_SELECT.gifImg_inFavorites);
+    if (favoritedGifImgs.length <= 0) {
+      return; // don't empty the results if there are no favorites
+    }
     JQ_SELECT.$searchResults
       .empty()
       .append(
-        $(DOM_SELECT.gifImg_inFavorites).closest(".imgResult").clone());
+        favoritedGifImgs.closest(".imgResult").clone());
   });
 
   JQ_SELECT.$clearAllFavs.click(function() {
